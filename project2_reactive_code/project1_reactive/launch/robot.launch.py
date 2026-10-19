@@ -39,7 +39,6 @@ def generate_launch_description():
     namespace = LaunchConfiguration('namespace')
     params_file = LaunchConfiguration('params_file')
 
-    use_bringup = LaunchConfiguration('use_bringup')
     use_teleop = LaunchConfiguration('use_teleop')
     use_mapper = LaunchConfiguration('use_mapper')
 
@@ -48,20 +47,6 @@ def generate_launch_description():
         ('/tf', 'tf'),
         ('/tf_static', 'tf_static'),
     ]
-
-    # 1. Optional physical robot bringup.
-    # Only enable this when running on the Raspberry Pi
-    # and when the robot's bringup is not already active.
-    robot_bringup = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(
-                get_package_share_directory('turtlebot4_bringup'),
-                'launch',
-                'robot.launch.py'
-            )
-        ),
-        condition=IfCondition(use_bringup),
-    )
 
     # 2. Reactive controller.
     reactive_controller = Node(
@@ -126,13 +111,6 @@ def generate_launch_description():
         ),
 
         DeclareLaunchArgument(
-            'use_bringup',
-            default_value='false',
-            choices=['true', 'false'],
-            description='Start hardware bringup on the Raspberry Pi'
-        ),
-
-        DeclareLaunchArgument(
             'use_teleop',
             default_value='false',
             choices=['true', 'false'],
@@ -146,7 +124,6 @@ def generate_launch_description():
             description='Start occupancy-grid mapper'
         ),
 
-        robot_bringup,
         reactive_controller,
         occupancy_mapper,
         keyboard_teleop,
