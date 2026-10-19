@@ -1,0 +1,76 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Cell Size: 0.3048
+      Plane Cell Count: 40
+      Reference Frame: <Fixed Frame>
+      Color: 160; 160; 164
+      Alpha: 0.3
+    - Class: rviz_default_plugins/Map
+      Name: Occupancy grid (/map)
+      Enabled: true
+      Topic:
+        Value: /map
+        Depth: 1
+        Durability Policy: Transient Local
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+      Color Scheme: map
+      Alpha: 0.9
+      Draw Behind: false
+    - Class: rviz_default_plugins/Odometry
+      Name: Robot pose (/odom)
+      Enabled: true
+      Topic:
+        Value: /odom
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+      Keep: 1
+      Shape:
+        Value: Arrow
+        Color: 255; 25; 0
+        Shaft Length: 0.3
+        Shaft Radius: 0.05
+        Head Length: 0.1
+        Head Radius: 0.1
+      Covariance:
+        Value: false
+    - Class: rviz_default_plugins/LaserScan
+      Name: Lidar (/scan)
+      Enabled: true
+      Topic:
+        Value: /scan
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+      Size (m): 0.03
+      Style: Flat Squares
+      Color Transformer: FlatColor
+      Color: 0; 200; 255
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: odom
+    Frame Rate: 30
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+  Views:
+    Current:
+      Class: rviz_default_plugins/TopDownOrtho
+      Name: Current View
+      Scale: 80
+      X: 0
+      Y: 0
+      Angle: 0
+Window Geometry:
+  Width: 1000
+  Height: 800

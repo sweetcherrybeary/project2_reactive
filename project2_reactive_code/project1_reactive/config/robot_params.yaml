@@ -1,0 +1,61 @@
+# Parameters for the PHYSICAL TurtleBot 4 in REPF B4 (Project 2).
+# config/params.yaml is still used for the Gazebo simulation.
+# Distances in meters, angles in degrees, times in seconds, speeds in m/s or rad/s.
+#
+# Values marked "TUNE" are starting points; adjust them in the lab
+# (see TUNING.md for the procedure). The rest should not need changing.
+
+/**/reactive_controller:   # /**/ matches the node in any robot namespace
+  ros__parameters:
+    # --- Interfaces (check once per robot with `ros2 topic info -v <topic>`) ---
+    cmd_vel_stamped: true          # Jazzy TurtleBot 4: TwistStamped on cmd_vel
+    teleop_topic: key_vel          # relative: follows the robot namespace
+    teleop_stamped: true
+    teleop_timeout: 1.0
+    auto_undock: true              # harmless if the robot is not on its dock
+    disable_reflexes: true         # stop the Create 3 backing away on bumps
+    bump_timeout: 0.25
+
+    # --- Lidar mounting (replaced from TF once it is available) ---
+    lidar_x_offset: -0.04
+    lidar_y_offset: 0.0
+    lidar_yaw_offset_deg: 90.0
+
+    # --- Perception ---
+    robot_radius: 0.17
+    obstacle_distance: 0.3048      # 1 ft from the robot's body (do not change)
+    front_half_angle_deg: 60.0     # TUNE: narrower = fewer false triggers from the side
+    center_band_deg: 5.0
+    symmetry_tolerance: 0.08       # TUNE: allows for real scan noise (sim: 0.05)
+    self_filter_margin: 0.0        # ignore returns inside the robot outline
+    outlier_beams: 2               # TUNE: 0 = most sensitive, 3-4 if ghost obstacles
+    scan_filter_window: 3          # TUNE: 1 = off; 3 removes single-scan glitches
+
+    # --- Motion ---
+    forward_speed: 0.15            # TUNE: sim used 0.2; slower = more stopping margin
+    turn_speed: 0.8                # TUNE: escape / random-turn top speed
+    min_turn_speed: 0.3            # TUNE: raise if turns stall before the target
+    turn_tolerance_deg: 3.0        # TUNE: raise if turns overshoot and hunt
+    turn_timeout_factor: 3.0
+    avoid_turn_speed: 0.8          # TUNE
+    avoid_hysteresis: 0.05         # TUNE: raise if avoid flickers on and off
+
+    # --- Behaviors (fixed by the assignment) ---
+    escape_turn_deg: 180.0
+    escape_jitter_deg: 30.0
+    random_turn_step: 0.3048       # 1 ft
+    random_turn_max_deg: 15.0
+    halt_hold_time: 1.0
+
+    log_clearances: false          # true while tuning: logs left/right clearances
+
+/**/occupancy_mapper:
+  ros__parameters:
+    cmd_vel_stamped: true
+    map_frame: odom
+    resolution: 0.05
+    map_size: 30.0
+    max_mapping_range: 5.0
+    lidar_x_offset: -0.04
+    lidar_y_offset: 0.0
+    lidar_yaw_offset_deg: 90.0
